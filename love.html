@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script src="theme/roma.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+
+var data = [
+    {name: '九江', value: 100},     // 张小泽
+    {name: '嘉兴', value: 100},     // 艳小胖
+    {name: '北京', value: 100},     // 研究生
+    {name: '安吉', value: 100},     // 15.2 旅游
+    {name: '大同', value: 100},     // 15.4 旅游
+    {name: '郑州', value: 100},     // 15.6 开会
+    {name: '蓬莱', value: 100},     // 15.8 实践
+    {name: '烟台', value: 100},     // 15.8 实践
+    {name: '秦皇岛', value: 100},   // 15.6 毕业旅行
+    {name: '西安', value: 100},     // 16.1 旅游
+    {name: '昌黎', value: 100},     // 16.5 旅游
+    {name: '承德', value: 100},     // 16.6 毕业旅行
+    {name: '雅安', value: 100},     // 16.7 实践
+    {name: '重庆', value: 100},     // 16.8 旅游
+    {name: '成都', value: 100},     // 16.8 旅游
+    {name: '大理', value: 100},     // 17.5 旅游
+    {name: '丽江', value: 100},     // 17.5 旅游
+    {name: '杭州', value: 100},     // now
+    {name: '石浦', value: 100},     // 看望爸妈
+    
+];
+
+var geoCoordMap = {
+    '九江':[],
+    '嘉兴':[],
+    '北京':[],
+    '安吉':[],
+    '大同':[],
+    '郑州':[],
+    '蓬莱':[],
+    '烟台':[],
+    '秦皇岛':[],
+    '西安':[],
+    '昌黎':[],
+    '承德':[],
+    '雅安':[],
+    '重庆':[],
+    '成都':[],
+    '大理':[],
+    '丽江':[],
+    '杭州':[120.208036,30.253082],
+    '石浦':[], 
+};
+
+var convertData = function (data) {
+    var res = [];
+    for (var i = 0; i < data.length; i++) {
+        var geoCoord = geoCoordMap[data[i].name];
+        if (geoCoord) {
+            res.push({
+                name: data[i].name,
+                value: geoCoord.concat(data[i].value)
+            });
+        }
+    }
+    return res;
+};
+
+function renderItem(params, api) {
+    var coords = [
+        [116.7,39.53],
+        [103.73,36.03],
+        [112.91,27.87],
+        [120.65,28.01],
+        [119.57,39.95]
+    ];
+    var points = [];
+    for (var i = 0; i < coords.length; i++) {
+        points.push(api.coord(coords[i]));
+    }
+    var color = api.visual('color');
+
+    return {
+        type: 'polygon',
+        shape: {
+            points: echarts.graphic.clipPointsByRect(points, {
+                x: params.coordSys.x,
+                y: params.coordSys.y,
+                width: params.coordSys.width,
+                height: params.coordSys.height
+            })
+        },
+        style: api.style({
+            fill: color,
+            stroke: echarts.color.lift(color)
+        })
+    };
+}
+
+option = {
+    // backgroundColor: '#404a59',
+    title: {
+        text: '张小泽&艳小胖的爱情足迹',
+        subtext: '',
+        sublink: '',
+        top: '10',
+        left: 'center',
+        textStyle: {
+            color: '#fff'
+        }
+    },
+    tooltip : {
+        trigger: 'item'
+    },
+    bmap: {
+        center: [120.208036,30.253082],
+        zoom: 6,
+        roam: true,
+        mapStyle: {
+            styleJson: [
+                    {
+                        "featureType": "water",
+                        "elementType": "all",
+                        "stylers": {
+                            "color": "#044161"
+                        }
+                    },
+                    {
+                        "featureType": "land",
+                        "elementType": "all",
+                        "stylers": {
+                            "color": "#004981"
+                        }
+                    },
+                    {
+                        "featureType": "boundary",
+                        "elementType": "geometry",
+                        "stylers": {
+                            "color": "#064f85"
+                        }
+                    },
+                    {
+                        "featureType": "railway",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "highway",
+                        "elementType": "geometry",
+                        "stylers": {
+                            "color": "#004981"
+                        }
+                    },
+                    {
+                        "featureType": "highway",
+                        "elementType": "geometry.fill",
+                        "stylers": {
+                            "color": "#005b96",
+                            "lightness": 1
+                        }
+                    },
+                    {
+                        "featureType": "highway",
+                        "elementType": "labels",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "arterial",
+                        "elementType": "geometry",
+                        "stylers": {
+                            "color": "#004981"
+                        }
+                    },
+                    {
+                        "featureType": "arterial",
+                        "elementType": "geometry.fill",
+                        "stylers": {
+                            "color": "#00508b"
+                        }
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "green",
+                        "elementType": "all",
+                        "stylers": {
+                            "color": "#056197",
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "subway",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "manmade",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "local",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "arterial",
+                        "elementType": "labels",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "boundary",
+                        "elementType": "geometry.fill",
+                        "stylers": {
+                            "color": "#029fd4"
+                        }
+                    },
+                    {
+                        "featureType": "building",
+                        "elementType": "all",
+                        "stylers": {
+                            "color": "#1a5787"
+                        }
+                    },
+                    {
+                        "featureType": "label",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    }
+            ]
+        }
+    },
+    series : [
+        {
+            name: 'pm2.5',
+            type: 'scatter',
+            coordinateSystem: 'bmap',
+            data: convertData(data),
+            symbolSize: function (val) {
+                return val[2] / 10;
+            },
+            label: {
+                normal: {
+                    formatter: '{b}',
+                    position: 'right',
+                    show: false
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#ddb926'
+                }
+            }
+        },
+        {
+            name: 'Top 5',
+            type: 'effectScatter',
+            coordinateSystem: 'bmap',
+            data: convertData(data.sort(function (a, b) {
+                return b.value - a.value;
+            }).slice(0, 6)),
+            symbolSize: function (val) {
+                return val[2] / 10;
+            },
+            showEffectOn: 'emphasis',
+            rippleEffect: {
+                brushType: 'stroke'
+            },
+            hoverAnimation: true,
+            label: {
+                normal: {
+                    formatter: '{b}',
+                    position: 'right',
+                    show: true
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#f4e925',
+                    shadowBlur: 10,
+                    shadowColor: '#333'
+                }
+            },
+            zlevel: 1
+        },
+        // {
+        //     type: 'custom',
+        //     coordinateSystem: 'bmap',
+        //     // renderItem: renderItem,
+        //     itemStyle: {
+        //         normal: {
+        //             opacity: 0.5
+        //         }
+        //     },
+        //     animation: false,
+        //     silent: true,
+        //     data: [0],
+        //     z: -10
+        // }
+    ]
+};;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
