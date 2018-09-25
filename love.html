@@ -40,13 +40,15 @@
             { name: '成都', value: 100, date: '2016.08' },     // 16.8 旅游
             { name: '大理', value: 100, date: '2017.05' },     // 17.5 旅游
             { name: '丽江', value: 100, date: '2017.05' },     // 17.5 旅游
-            { name: '杭州', value: 200, date: 'now' },     // now
+            { name: '杭州', value: 200, date: '现在' },     // now
             { name: '石浦', value: 100, date: '2018.07' },     // 看望爸妈
+            { name: '泰兴', value: 100, date: '2017.10' },     // 康妹婚礼
+            { name: '绍兴', value: 100, date: '-' },
         ];
 
         var path = [
-            [{ name: '北京' }, { name: '湖口', value: 100 }],
-            [{ name: '北京' }, { name: '嘉兴', value: 100 }],
+            [{ name: '湖口' }, { name: '北京', value: 100 }],
+            [{ name: '嘉兴' }, { name: '北京', value: 100 }],
             [{ name: '北京' }, { name: '大同', value: 100 }],
             [{ name: '北京' }, { name: '郑州', value: 100 }],
             [{ name: '北京' }, { name: '秦皇岛', value: 100 }],
@@ -65,6 +67,8 @@
             [{ name: '嘉兴' }, { name: '杭州', value: 100 }],
             [{ name: '杭州' }, { name: '石浦', value: 100 }],
             [{ name: '杭州' }, { name: '安吉', value: 100 }],
+            [{ name: '杭州' }, { name: '泰兴', value: 100 }],
+            [{ name: '杭州' }, { name: '绍兴', value: 100 }],
 
 
         ];
@@ -89,6 +93,8 @@
             '丽江': [100.229628398879, 26.8753510894814],
             '杭州': [120.21937541572, 30.2592444615361],
             '石浦': [120.836624214548, 27.9311509962931],
+            '泰兴': [120.13534629200471, 32.213678940627226],
+            '绍兴': [120.59246738555154, 30.00236458052847],
         };
 
         var convertData = function (data) {
@@ -129,13 +135,19 @@
         option = {
             backgroundColor: '#044161',
             title: {
-                text: '张小泽&艳小胖',
-                subtext: '',
+                text: 'OUR ROAD',
+                subtext: '张泽 ❤ 吴春艳',
                 sublink: '',
-                top: '10',
+                top: '20',
                 left: 'center',
                 textStyle: {
-                    color: '#fff'
+                    color: '#b8f1ed',
+                    fontSize: '26',
+                    fontFamily: 'Menlo'
+                },
+                subtextStyle: {
+                    color: '#f1b8e4',
+                    fontSize: '18',
                 }
             },
             tooltip: {
@@ -149,7 +161,8 @@
                     }
                 },
                 roam: true,
-                zoom: 1,
+                zoom: 1.2,
+                center: [104, 36],
                 itemStyle: {
                     normal: {
                         areaColor: '#014881',
@@ -158,135 +171,6 @@
                     emphasis: {
                         areaColor: '#014881'
                     }
-                }
-            },
-            bmap: {
-                center: [113.649643849864, 34.7566100641403],
-                zoom: 6,
-                roam: true,
-                mapStyle: {
-                    styleJson: [
-
-                        {
-                            'featureType': 'water',
-                            'elementType': 'all',
-                            'stylers': {
-                                'color': '#031628'
-                            }
-                        },
-                        {
-                            'featureType': 'land',
-                            'elementType': 'geometry',
-                            'stylers': {
-                                'color': '#000102'
-                            }
-                        },
-                        {
-                            'featureType': 'highway',
-                            'elementType': 'all',
-                            'stylers': {
-                                'visibility': 'off'
-                            }
-                        },
-                        {
-                            'featureType': 'arterial',
-                            'elementType': 'geometry.fill',
-                            'stylers': {
-                                'color': '#000000'
-                            }
-                        },
-                        {
-                            'featureType': 'arterial',
-                            'elementType': 'geometry.stroke',
-                            'stylers': {
-                                'color': '#0b3d51'
-                            }
-                        },
-                        {
-                            'featureType': 'local',
-                            'elementType': 'geometry',
-                            'stylers': {
-                                'color': '#000000'
-                            }
-                        },
-                        {
-                            'featureType': 'railway',
-                            'elementType': 'geometry.fill',
-                            'stylers': {
-                                'color': '#000000'
-                            }
-                        },
-                        {
-                            'featureType': 'railway',
-                            'elementType': 'geometry.stroke',
-                            'stylers': {
-                                'color': '#08304b'
-                            }
-                        },
-                        {
-                            'featureType': 'subway',
-                            'elementType': 'geometry',
-                            'stylers': {
-                                'lightness': -70
-                            }
-                        },
-                        {
-                            'featureType': 'building',
-                            'elementType': 'geometry.fill',
-                            'stylers': {
-                                'color': '#000000'
-                            }
-                        },
-                        {
-                            'featureType': 'all',
-                            'elementType': 'labels.text.fill',
-                            'stylers': {
-                                'color': '#857f7f'
-                            }
-                        },
-                        {
-                            'featureType': 'all',
-                            'elementType': 'labels.text.stroke',
-                            'stylers': {
-                                'color': '#000000'
-                            }
-                        },
-                        {
-                            'featureType': 'building',
-                            'elementType': 'geometry',
-                            'stylers': {
-                                'color': '#022338'
-                            }
-                        },
-                        {
-                            'featureType': 'green',
-                            'elementType': 'geometry',
-                            'stylers': {
-                                'color': '#062032'
-                            }
-                        },
-                        {
-                            'featureType': 'boundary',
-                            'elementType': 'all',
-                            'stylers': {
-                                'color': '#465b6c'
-                            }
-                        },
-                        {
-                            'featureType': 'manmade',
-                            'elementType': 'all',
-                            'stylers': {
-                                'color': '#022338'
-                            }
-                        },
-                        {
-                            'featureType': 'label',
-                            'elementType': 'all',
-                            'stylers': {
-                                'visibility': 'off'
-                            }
-                        }
-                    ]
                 }
             },
             series: [
