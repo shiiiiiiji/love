@@ -16,6 +16,7 @@
     <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
     <script type="text/javascript" src="./js/bmap.min.js"></script>
     <script type="text/javascript" src="./js/simplex.js"></script>
+    <script type="text/javascript" src="./js/moment-with-locales.js"></script>
     <script type="text/javascript">
         var dom = document.getElementById("container");
         var myChart = echarts.init(dom);
@@ -23,52 +24,53 @@
         option = null;
 
         var data = [
-            { name: '湖口', value: 150, date: '1993.06.18' },     // 张小泽
-            { name: '嘉兴', value: 150, date: '1991.03.27' },     // 艳小胖
-            { name: '北京', value: 150, date: '2014.09.01' },     // 研究生
-            { name: '安吉', value: 120, date: '2015.02.13' },     // 15.2 旅游
-            { name: '大同', value: 100, date: '2015.04' },     // 15.4 旅游
-            { name: '郑州', value: 100, date: '2015.06.18' },     // 15.6 开会
-            { name: '秦皇岛', value: 100, date: '2015.06' },   // 15.6 毕业旅行
-            { name: '蓬莱', value: 100, date: '2015.08' },     // 15.8 实践
-            { name: '烟台', value: 100, date: '2015.08' },     // 15.8 实践
-            { name: '西安', value: 100, date: '2016.01' },     // 16.1 旅游
-            { name: '昌黎', value: 100, date: '2016.05' },     // 16.5 旅游
-            { name: '承德', value: 100, date: '2016.06' },     // 16.6 毕业旅行
-            { name: '雅安', value: 100, date: '2016.07' },     // 16.7 实践
-            { name: '重庆', value: 100, date: '2016.08' },     // 16.8 旅游
-            { name: '成都', value: 100, date: '2016.08' },     // 16.8 旅游
-            { name: '大理', value: 100, date: '2017.05' },     // 17.5 旅游
-            { name: '丽江', value: 100, date: '2017.05' },     // 17.5 旅游
-            { name: '杭州', value: 200, date: '现在' },     // now
-            { name: '石浦', value: 100, date: '2018.07' },     // 看望爸妈
-            { name: '泰兴', value: 100, date: '2017.10' },     // 康妹婚礼
-            { name: '绍兴', value: 100, date: '-' },
+            { name: '湖口', value: 150, date: '新郎出生：1993.06.18', year: '1993' },     // 张小泽
+            { name: '嘉兴', value: 150, date: '新娘出生：1991.03.27', year: '1991' },     // 艳小胖
+            { name: '北京', value: 150, date: '相识：2014.09.01', year: '2014' },     // 研究生
+            { name: '安吉', value: 120, date: '相恋：2015.02.13', year: '2015' },     // 15.2 旅游
+            { name: '大同', value: 100, date: '第一次出去玩：2015.04', year: '2015' },     // 15.4 旅游
+            { name: '郑州', value: 100, date: '艳儿给我准备生日惊喜：2015.06.18', year: '2015' },     // 15.6 开会
+            { name: '秦皇岛', value: 100, date: '第一次给师兄师姐准备毕业旅行：2015.06', year: '2015' },   // 15.6 毕业旅行
+            { name: '蓬莱', value: 100, date: '第一次暑期社会实践：2015.08', year: '2015' },     // 15.8 实践
+            { name: '烟台', value: 100, date: '第一次暑期社会实践：2015.08', year: '2015' },     // 15.8 实践
+            { name: '西安', value: 100, date: '和二姐和臭凡出去耍：2016.01', year: '2016' },     // 16.1 旅游
+            { name: '昌黎', value: 100, date: '去南戴河：2016.05', year: '2016' },     // 16.5 旅游
+            { name: '承德', value: 100, date: '第二次毕业旅行：2016.06', year: '2016' },     // 16.6 毕业旅行
+            { name: '雅安', value: 100, date: '第二次暑期社会实践：2016.07', year: '2016' },     // 16.7 实践
+            { name: '重庆', value: 100, date: '第二次暑期社会实践：2016.08', year: '2016' },     // 16.8 旅游
+            { name: '成都', value: 100, date: '第二次暑期社会实践：2016.08', year: '2016' },     // 16.8 旅游
+            { name: '大理', value: 100, date: '二人毕业旅行：2017.05', year: '2017' },     // 17.5 旅游
+            { name: '丽江', value: 100, date: '二人毕业旅行：2017.05', year: '2017' },     // 17.5 旅游
+            { name: '杭州', value: 200, date: '现在', year: '2017' },     // now
+            { name: '石浦', value: 100, date: '去看望爸爸妈妈：2018.07', year: '2018' },     // 看望爸妈
+            { name: '泰兴', value: 100, date: '去参加同学婚礼：2017.10', year: '2017' },     // 康妹婚礼
+            { name: '绍兴', value: 100, date: '-', year: '2017' },
         ];
 
         var path = [
-            [{ name: '湖口' }, { name: '北京', value: 100 }],
-            [{ name: '嘉兴' }, { name: '北京', value: 100 }],
-            [{ name: '北京' }, { name: '大同', value: 100 }],
-            [{ name: '北京' }, { name: '郑州', value: 100 }],
-            [{ name: '北京' }, { name: '秦皇岛', value: 100 }],
-            [{ name: '烟台' }, { name: '蓬莱', value: 100 }],
-            [{ name: '北京' }, { name: '烟台', value: 100 }],
-            [{ name: '北京' }, { name: '西安', value: 100 }],
-            [{ name: '北京' }, { name: '昌黎', value: 100 }],
-            [{ name: '北京' }, { name: '承德', value: 100 }],
-            [{ name: '成都' }, { name: '雅安', value: 100 }],
-            [{ name: '成都' }, { name: '重庆', value: 100 }],
-            [{ name: '北京' }, { name: '成都', value: 100 }],
-            [{ name: '北京' }, { name: '大理', value: 100 }],
-            [{ name: '大理' }, { name: '丽江', value: 100 }],
-            [{ name: '北京' }, { name: '杭州', value: 100 }],
-            [{ name: '湖口' }, { name: '杭州', value: 100 }],
-            [{ name: '嘉兴' }, { name: '杭州', value: 100 }],
-            [{ name: '杭州' }, { name: '石浦', value: 100 }],
-            [{ name: '杭州' }, { name: '安吉', value: 100 }],
-            [{ name: '杭州' }, { name: '泰兴', value: 100 }],
-            [{ name: '杭州' }, { name: '绍兴', value: 100 }],
+            [{ name: '湖口' }, { name: '北京', value: 100, year: '2014' }],
+            [{ name: '湖口' }, { name: '杭州', value: 100, year: '2015' }],
+            [{ name: '嘉兴' }, { name: '北京', value: 100, year: '2014' }],
+            [{ name: '北京' }, { name: '大同', value: 100, year: '2015' }],
+            [{ name: '北京' }, { name: '郑州', value: 100, year: '2015' }],
+            [{ name: '北京' }, { name: '秦皇岛', value: 100, year: '2015' }],
+            [{ name: '烟台' }, { name: '蓬莱', value: 100, year: '2015' }],
+            [{ name: '北京' }, { name: '烟台', value: 100, year: '2015' }],
+            [{ name: '北京' }, { name: '西安', value: 100, year: '2016' }],
+            [{ name: '北京' }, { name: '昌黎', value: 100, year: '2016' }],
+            [{ name: '北京' }, { name: '承德', value: 100, year: '2016' }],
+            [{ name: '成都' }, { name: '雅安', value: 100, year: '2016' }],
+            [{ name: '成都' }, { name: '重庆', value: 100, year: '2016' }],
+            [{ name: '北京' }, { name: '成都', value: 100, year: '2016' }],
+            [{ name: '北京' }, { name: '大理', value: 100, year: '2017' }],
+            [{ name: '大理' }, { name: '丽江', value: 100, year: '2017' }],
+            [{ name: '北京' }, { name: '杭州', value: 100, year: '2017' }],
+            [{ name: '湖口' }, { name: '杭州', value: 100, year: '2016' }],
+            [{ name: '嘉兴' }, { name: '杭州', value: 100, year: '2017' }],
+            [{ name: '杭州' }, { name: '石浦', value: 100, year: '2018' }],
+            [{ name: '杭州' }, { name: '安吉', value: 100, year: '2015' }],
+            [{ name: '杭州' }, { name: '泰兴', value: 100, year: '2017' }],
+            [{ name: '杭州' }, { name: '绍兴', value: 100, year: '2017' }],
 
 
         ];
@@ -105,7 +107,8 @@
                     res.push({
                         name: data[i].name,
                         value: geoCoord.concat(data[i].value),
-                        date: data[i].date
+                        date: data[i].date,
+                        year: data[i].year
                     });
                 }
             }
@@ -122,6 +125,7 @@
                     res.push({
                         fromName: dataItem[0].name,
                         toName: dataItem[1].name,
+                        year: dataItem[1].year,
                         coords: [fromCoord, toCoord]
                     });
                 }
@@ -129,147 +133,284 @@
             return res;
         }
 
-        console.log(convertData(data));
-        console.log(converPath(path));
+        // console.log(convertData(data));
+        // console.log(converPath(path));
 
-        option = {
-            backgroundColor: '#044161',
-            title: {
-                text: 'OUR ROAD',
-                subtext: '',
-                sublink: '',
-                top: '20',
-                left: 'center',
-                textStyle: {
-                    color: '#b8f1ed',
-                    fontSize: '26',
-                    fontFamily: 'Menlo'
-                },
-                subtextStyle: {
-                    color: '#f1b8e4',
-                    fontSize: '18',
-                }
-            },
-            tooltip: {
-                trigger: 'item'
-            },
-            geo: {
-                map: 'china',
-                label: {
-                    emphasis: {
-                        show: false
-                    }
-                },
-                roam: true,
-                zoom: 1.2,
-                center: [104, 36],
-                itemStyle: {
-                    normal: {
-                        areaColor: '#014881',
-                        borderColor: '#029FD4'
-                    },
-                    emphasis: {
-                        areaColor: '#014881'
-                    }
-                }
-            },
-            series: [
-                {
-                    name: '时间',
-                    type: 'scatter',
-                    coordinateSystem: 'geo',
-                    data: convertData(data),
-                    symbolSize: function (val) {
-                        return val[2] / 10;
-                    },
-
-                    label: {
-                        normal: {
-                            formatter: '{b}',
-                            position: 'right',
-                            show: true
-                        },
-                        // emphasis: {
-                        //     show: true
-                        // }
-                    },
-                    itemStyle: {
-                        normal: {
-                            color: '#ddb926'
-                        }
-                    },
-                    tooltip: {
-                        formatter: (params) => {
-                            return params.data.date;
-                        },
-                    }
-
-                },
-                {
-                    name: '时间',
-                    type: 'effectScatter',
-                    coordinateSystem: 'geo',
-                    data: convertData(data.sort(function (a, b) {
-                        return b.value - a.value;
-                    }).slice(0, 4)),
-                    symbolSize: function (val) {
-                        return val[2] / 15;
-                    },
-                    showEffectOn: 'render',
-                    rippleEffect: {
-                        brushType: 'stroke'
-                    },
-                    hoverAnimation: true,
-                    label: {
-                        normal: {
-                            formatter: '{b}',
-                            position: 'right',
-                            show: true
-                        }
-                    },
-                    itemStyle: {
-                        normal: {
-                            color: '#f4e925',
-                            shadowBlur: 10,
-                            shadowColor: '#333'
-                        }
-                    },
-                    tooltip: {
-                        formatter: (params) => {
-                            return params.data.date;
-                        },
-                    },
-                    zlevel: 1
-                },
-                {
-                    name: 'path',
-                    type: 'lines',
-                    zlevel: 0,
-                    effect: {
-                        show: true,
-                        period: 6,
-                        trailLength: 0.7,
+        var start = moment([2015, 1, 13]);
+        var now = moment();
+        var diff = moment.duration(now - start, 'ms');
+        console.log(diff);
+        myChart.setOption({
+            baseOption: {
+                backgroundColor: '#044161',
+                title: {
+                    text: 'Our Road to LOVE',
+                    subtext: 'Z & W',
+                    sublink: '',
+                    top: '40',
+                    left: 'center',
+                    textStyle: {
                         color: '#b8f1ed',
-                        symbolSize: 3
+                        fontSize: '26',
+                        fontFamily: 'Menlo'
                     },
-                    lineStyle: {
-                        normal: {
-                            color: '#b8f1ed',
-                            width: 1,
-                            opacity: 0.6,
-                            curveness: 0.2
+                    subtextStyle: {
+                        color: '#fff',
+                        fontSize: '18',
+                    },
+                    shadowColor: 'rgba(0, 0, 0, 0.5)',
+                    shadowBlur: 10
+                },
+                geo: {
+                    map: 'china',
+                    label: {
+                        emphasis: {
+                            show: false
                         }
                     },
-                    data: converPath(path),
-                    tooltip: {
-                        formatter: '{b}',
+                    roam: true,
+                    zoom: 1.8,
+                    scaleLimit: {
+                        min: 1,
+                        max: 3
                     },
+                    silent: true,
+                    center: [108, 34],
+                    itemStyle: {
+                        normal: {
+                            areaColor: '#014881',
+                            borderColor: '#029FD4'
+                        },
+                        emphasis: {
+                            areaColor: '#014881'
+                        }
+                    }
+                },
+                timeline: {
+                    autoPlay: true,
+                    playInterval: 3000,
+                    axisType: 'category',
+                    // loop: false,
+                    data: ['2014-01-01', '2015-01-01', '2016-01-01', '2017-01-01', '2018-01-01'],
+                    zlevel: 4,
+                    lineStyle: {
+                        color: '#fff'
+                    },
+                    checkpointStyle: {
+                        color: '#b8f1cc'
+                    },
+                    label: {
+                        color: '#fff',
+                        formatter: function (value, index) {
+                            return value.substr(0, 4);
+                        }
+                    },
+                    controlStyle: {
+                        color: '#fff',
+                        borderColor: '#fff'
+                    }
+                },
+                series: [
+                    {
+                        name: '时间',
+                        type: 'scatter',
+                        coordinateSystem: 'geo',
+                        symbolSize: function (val) {
+                            return val[2] / 10;
+                        },
+
+                        label: {
+                            normal: {
+                                formatter: '{b}',
+                                position: 'right',
+                                show: true,
+                                fontSize: '16'
+                            },
+
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: '#b8f1ed'
+                            }
+                        },
+                        tooltip: {
+                            formatter: (params) => {
+                                return params.data.date;
+                            },
+                        }
+                    },
+                    {
+                        name: '时间',
+                        type: 'effectScatter',
+                        coordinateSystem: 'geo',
+                        symbolSize: function (val) {
+                            return val[2] / 15;
+                        },
+                        data: convertData(data.sort(function (a, b) {
+                            return b.value - a.value;
+                        }).slice(0, 4)),
+                        showEffectOn: 'render',
+                        rippleEffect: {
+                            brushType: 'stroke'
+                        },
+                        hoverAnimation: true,
+                        label: {
+                            normal: {
+                                formatter: '{b}',
+                                // formatter: '',
+                                position: 'right',
+                                show: true,
+                                fontSize: '20'
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: '#dcff93',
+                                // shadowBlur: 10,
+                                // shadowColor: '#333'
+                            }
+                        },
+                        tooltip: {
+                            formatter: (params) => {
+                                return params.data.date;
+                            },
+                        },
+                        zlevel: 1
+                    },
+                    {
+                        name: 'path',
+                        type: 'lines',
+                        zlevel: 0,
+                        effect: {
+                            show: true,
+                            period: 6,
+                            trailLength: 0.7,
+                            color: '#b8f1ed',
+                            symbolSize: 3
+                        },
+                        lineStyle: {
+                            normal: {
+                                color: '#b8f1ed',
+                                width: 1,
+                                opacity: 0.6,
+                                curveness: 0.2
+                            }
+                        },
+                        tooltip: {
+                            formatter: '{b}',
+                        },
+                    }
+                ]
+
+            },
+            options: [
+                {
+                    series: [
+                        {
+
+                            data: convertData(data.filter(function (item) {
+                                return item.year - 2014 <= 0
+                            })),
+
+
+                        },
+                        {},
+                        {
+
+                            data: converPath(path).filter(function (item) {
+                                return item.year - 2014 <= 0
+                            }),
+
+                        }
+                    ]
+
+                },
+                {
+                    series: [
+                        {
+
+                            data: convertData(data.filter(function (item) {
+                                return item.year - 2015 <= 0
+                            })),
+
+
+                        },
+                        {},
+                        {
+
+                            data: converPath(path).filter(function (item) {
+                                return item.year - 2015 <= 0
+                            }),
+
+                        }
+                    ]
+                },
+                {
+                    series: [
+                        {
+
+                            data: convertData(data.filter(function (item) {
+                                return item.year - 2016 <= 0
+                            })),
+
+
+                        },
+                        {},
+                        {
+
+                            data: converPath(path).filter(function (item) {
+                                return item.year - 2016 <= 0
+                            }),
+
+                        }
+                    ]
+                },
+                {
+                    series: [
+                        {
+
+                            data: convertData(data.filter(function (item) {
+                                return item.year - 2017 <= 0
+                            })),
+
+
+                        },
+                        {},
+                        {
+
+                            data: converPath(path).filter(function (item) {
+                                return item.year - 2017 <= 0
+                            }),
+
+                        }
+                    ]
+                },
+                {
+                    series: [
+                        {
+
+                            data: convertData(data.filter(function (item) {
+                                return item.year - 2018 <= 0
+                            })),
+
+
+                        },
+                        {},
+                        {
+
+                            data: converPath(path).filter(function (item) {
+                                return item.year - 2018 <= 0
+                            }),
+
+                        }
+                    ]
                 }
             ]
-        };;
-        if (option && typeof option === "object") {
-            myChart.setOption(option, true);
-        }
+
+
+        }, true);
+
+
     </script>
 </body>
 
