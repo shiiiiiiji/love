@@ -188,8 +188,9 @@
                 },
                 timeline: {
                     autoPlay: true,
-                    playInterval: 3000,
+                    playInterval: 2000,
                     axisType: 'category',
+                    bottom: 20,
                     // loop: false,
                     data: ['2014-01-01', '2015-01-01', '2016-01-01', '2017-01-01', '2018-01-01'],
                     zlevel: 4,
@@ -201,6 +202,7 @@
                     },
                     label: {
                         color: '#fff',
+                        fontSize: '16',
                         formatter: function (value, index) {
                             return value.substr(0, 4);
                         }
