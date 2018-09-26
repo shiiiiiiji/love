@@ -169,13 +169,13 @@
                         }
                     },
                     roam: true,
-                    zoom: 1.8,
+                    zoom: 1.2,
                     scaleLimit: {
                         min: 1,
                         max: 5
                     },
                     silent: true,
-                    center: [106, 34],
+                    center: [106, 36],
                     itemStyle: {
                         normal: {
                             areaColor: '#014881',
@@ -188,7 +188,7 @@
                 },
                 timeline: {
                     autoPlay: true,
-                    playInterval: 2000,
+                    playInterval: 3000,
                     axisType: 'category',
                     bottom: 20,
                     // loop: false,
@@ -301,6 +301,16 @@
                         tooltip: {
                             formatter: '{b}',
                         },
+                        effect: {
+                            show: true,
+                            period: 6,
+                            trailLength: 0,
+                            symbol: 'arrow',
+                            symbolSize: 6
+                        },
+                        symbol: 'arrow',
+                        symbolSize: 6
+
                     }
                 ]
 
